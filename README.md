@@ -1,18 +1,18 @@
 # Covid19 Metrics
 This is a silly little project I wrote to graph various metrics related to Covid19. 
 
-It uses [Google Public Datasets for Covid19]([https://cloud.google.com/blog/products/data-analytics/free-public-datasets-for-covid19)
-for it's data sources and [Pandas] (https://pandas.pydata.org/) for graphing of data. 
+It uses [Google Public Datasets for Covid19](https://cloud.google.com/blog/products/data-analytics/free-public-datasets-for-covid19)
+for it's data sources and [Pandas](https://pandas.pydata.org/) for graphing of data. 
 
 ## Examples
 `./covid_metrics Texas "New York"`
-(![deaths](examples/deaths.png))
+![deaths](examples/deaths.png)
 
 `./covid_metrics Texas "New York" -m confirmed_cases`
-(![confirmed cases](examples/confirmed_cases.png))
+![confirmed cases](examples/confirmed_cases.png)
 
 `./covid_metrics Texas "New York" -m new_deaths`
-(![confirmed cases](examples/new_deaths.png))
+![confirmed cases](examples/new_deaths.png)
 
 ## Prereqs 
 You can't use my google cloud account, because, well, it's mine and people sometimes do stupid stuff. So, you'll

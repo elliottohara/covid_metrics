@@ -1,6 +1,5 @@
 google_creds.json
 .venv
-*.png
 .idea
 .DS_Store
 env
