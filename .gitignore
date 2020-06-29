@@ -3,3 +3,6 @@ google_creds.json
 .idea
 .DS_Store
 env
+
+*.png
+!/examples/*.png

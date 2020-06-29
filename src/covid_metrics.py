@@ -1,6 +1,6 @@
 import argparse
 import os
-from datetime import datetime
+import datetime
 from glob import glob
 from typing import List
 
@@ -18,6 +18,7 @@ labels = {'deaths': 'Total Deaths by State',
           'new_deaths': 'Daily Deaths by State'
           }
 
+DATE_FORMAT = '%Y-%m-%d'
 
 def clean():
     files = glob(f'{MOUNT_LOCATION}/*.png')
@@ -28,7 +29,7 @@ def clean():
             print("Error while deleting file : ", file_path)
 
 
-def main(metric: str, states: List[str]):
+def main(start_date: datetime.datetime, end_date: datetime.datetime, metric: str, states: List[str]):
     extra_colums = ','.join(col for col in choices if col not in maps)
     aliased_columns = ','.join([f'{expression} as {alias}' for alias, expression in maps.items()])
 
@@ -36,6 +37,7 @@ def main(metric: str, states: List[str]):
             SELECT state_name, date, {extra_colums}, {aliased_columns}
             FROM `bigquery-public-data.covid19_nyt.us_states`
             WHERE state_name IN ({','.join([f"'{x}'" for x in states])})
+            AND date between '{start_date.strftime(DATE_FORMAT)}' AND '{end_date.strftime(DATE_FORMAT)}'
             order by date
             LIMIT 1000 
         """
@@ -48,10 +50,14 @@ def main(metric: str, states: List[str]):
 
     plt.legend(loc='best')
     plt.title(labels.get(metric))
-    filename = f'{datetime.now().isoformat()}.png'
+    filename = f'{datetime.datetime.now().isoformat()}.png'
     plt.savefig(f'/{MOUNT_LOCATION}/{filename}')
     print('\n')
     print(f'output: {filename}')
+
+
+def parse_date(s):
+    return datetime.datetime.strptime(s, '%Y-%m-%d')
 
 
 parser = argparse.ArgumentParser(description='COVID 19 Stats by day by state.')
@@ -64,10 +70,16 @@ parser.add_argument('--clean', "-c",
                     action='store_const',
                     const=clean,
                     default=lambda: None)
+parser.add_argument('--start-date', '-s', help='Filter days before this date.',
+                    type=parse_date,
+                    default='2019-01-01')
+parser.add_argument('--end-date', '-e', help='Filter days after this date.',
+                    default=datetime.datetime.now().strftime('%Y-%m-%d'),
+                    type=parse_date)
 parser.add_argument('states', nargs="+", help='Name of state to show.')
 
 
 if __name__ == '__main__':
     args = parser.parse_args()
     args.clean()
-    main(args.metric, args.states)
+    main(args.start_date, args.end_date, args.metric, args.states)

@@ -5,14 +5,21 @@ It uses [Google Public Datasets for Covid19](https://cloud.google.com/blog/produ
 for it's data sources and [Pandas](https://pandas.pydata.org/) for graphing of data. 
 
 ## Examples
+Show total deaths in Texas and New York
 `./covid_metrics Texas "New York"`
 ![deaths](examples/deaths.png)
 
+Show confirmed cases in Texas and New York
 `./covid_metrics Texas "New York" -m confirmed_cases`
 ![confirmed cases](examples/confirmed_cases.png)
 
+Show daily deaths in Texas and New York
 `./covid_metrics Texas "New York" -m new_deaths`
 ![confirmed cases](examples/new_deaths.png)
+
+Show daily deaths in Texas and New York from 2020-06-10 until 2020-06-19
+`./covid_metrics --clean Texas "New York" -m new_deaths -s 2020-06-10 -e 2020-06-19`
+![start and end date filtering](examples/start_and_end_date.png)
 
 ## Prereqs 
 You can't use my google cloud account, because, well, it's mine and people sometimes do stupid stuff. So, you'll
