@@ -4,6 +4,16 @@ This is a silly little project I wrote to graph various metrics related to Covid
 It uses [Google Public Datasets for Covid19]([https://cloud.google.com/blog/products/data-analytics/free-public-datasets-for-covid19)
 for it's data sources and [Pandas] (https://pandas.pydata.org/) for graphing of data. 
 
+## Examples
+`./covid_metrics Texas "New York"`
+(![deaths](examples/deaths.png))
+
+`./covid_metrics Texas "New York" -m confirmed_cases`
+(![confirmed cases](examples/confirmed_cases.png))
+
+`./covid_metrics Texas "New York" -m new_deaths`
+(![confirmed cases](examples/new_deaths.png))
+
 ## Prereqs 
 You can't use my google cloud account, because, well, it's mine and people sometimes do stupid stuff. So, you'll
 need to quickly create a new Google Cloud Project (it's free) and set up authentication. It takes about 30 seconds.
